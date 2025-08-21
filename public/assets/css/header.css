@@ -1,0 +1,160 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* Ensures padding doesn't affect element width */
+}
+
+body {
+    font-family: verdana, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.header_main {
+    width: 100%;
+    background-color: #003344;
+}
+
+.header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+}
+
+.logo-section {
+    display: flex;
+    align-items: center;
+}
+
+.logo-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.logo_img {
+    width: 50px;
+    height: 50px;
+    border-radius: 20px;
+    margin-right: 10px;
+}
+
+.name h5, .name h6 {
+    color: white;
+    margin: 0;
+}
+
+.name h5 {
+    font-size: 1.5em;
+    font-weight: normal;
+}
+
+.name h6 {
+    font-size: 0.701em;
+}
+
+.search-and-nav {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.search-bar {
+    margin-bottom: 10px;
+}
+
+.search {
+    border: 1px solid #475f82;
+    border-radius: 5px;
+    padding: 8px;
+    background-color: #004156;
+    color: #fff;
+}
+
+.button {
+    border: 0;
+    border-radius: 5px;
+    background-color: #17c3ba;
+    color: white;
+    padding: 8px 12px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.button:hover {
+    background-color: #14a198;
+}
+
+.navbar ul {
+    list-style: none;
+    display: flex;
+}
+
+.navbar li a {
+    padding: 10px 15px;
+    text-decoration: none;
+    color: #fff;
+    font-size: 14px;
+    transition: color 0.6s;
+}
+
+.navbar li a:hover {
+    color: #17c3ba;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropbtn {
+    background-color: transparent;
+    color: white;
+    padding: 10px 15px;
+    font-size: 14px;
+    border: none;
+    cursor: pointer;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #004156;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    right: 0;
+}
+
+.dropdown-content a {
+    color: white;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #17c3ba;
+}
+
+.show {
+    display: block;
+}
+
+.movie_categories {
+    background-color: #005f7d;
+    font-size: 15px;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+}
+
+.movie_categories a {
+    color: white;
+    text-decoration: none;
+    transition: color 0.6s;
+}
+
+.movie_categories a:hover {
+    color: #17c3ba;
+}
