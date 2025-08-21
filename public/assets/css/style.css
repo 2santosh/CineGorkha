@@ -1,156 +1,115 @@
-/*
- * style.css
- *
- * This file contains global CSS styles for the MovieFlix application.
- * It's meant to define common styles, color schemes, typography,
- * and base layouts that apply across different pages.
- *
- * Note: Specific component styles (like header) are in their own CSS files.
- * This file should load AFTER Bootstrap CSS to allow for easy overriding.
- */
-
-/* Base Styles */
-body {
-    font-family: 'Arial', sans-serif; /* Fallback to Arial, can be customized */
+/* Reset and base styles */
+* {
     margin: 0;
     padding: 0;
-    background-color: #1a1a1a; /* Dark background for a movie theme */
-    color: #f0f0f0; /* Light text color */
-    line-height: 1.6;
-}
-
-/* Ensure all elements box-sizing is border-box */
-*, *::before, *::after {
     box-sizing: border-box;
 }
 
-/* Main Content Area */
+body {
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f4f4f4;
+}
+
+/* Header styles */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: #2c3e50;
+    color: white;
+}
+
+.nav-brand a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.nav-menu a {
+    color: white;
+    text-decoration: none;
+    margin-left: 1.5rem;
+}
+
+.nav-menu a:hover {
+    text-decoration: underline;
+}
+
+/* Main content */
 main {
-    padding: 20px 0;
-    max-width: 1200px;
+    padding: 2rem;
+    min-height: calc(100vh - 120px);
+}
+
+/* Hero section */
+.hero {
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('../images/hero-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    color: white;
+    padding: 4rem 2rem;
+    text-align: center;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+}
+
+.hero-content h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.hero-content p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+}
+
+.search-form {
+    display: flex;
+    justify-content: center;
+    max-width: 600px;
     margin: 0 auto;
 }
 
-/* Sections Styling */
-section {
-    padding: 40px 20px;
-    margin-bottom: 30px;
-    background-color: #2a2a2a; /* Slightly lighter dark background for sections */
-    border-radius: 10px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-}
-
-h1, h2, h3, h4, h5, h6 {
-    color: #17c3ba; /* A vibrant teal color for headings */
-    margin-bottom: 20px;
-    text-align: center;
-}
-
-h1 {
-    font-size: 3em;
-}
-
-h2 {
-    font-size: 2.2em;
-}
-
-/* Buttons */
-.btn-primary {
-    display: inline-block;
-    background-color: #e50914; /* Netflix red */
-    color: white;
-    padding: 12px 25px;
-    border-radius: 5px;
-    text-decoration: none;
-    font-size: 1.2em;
-    transition: background-color 0.3s ease;
+.search-form input {
+    flex: 1;
+    padding: 0.8rem;
     border: none;
-    cursor: pointer;
+    border-radius: 4px 0 0 4px;
+    font-size: 1rem;
 }
 
-.btn-primary:hover {
-    background-color: #c40812;
-}
-
-.btn-secondary {
-    display: inline-block;
-    background-color: #005f7d; /* Darker blue/green */
+.search-form button {
+    padding: 0.8rem 1.5rem;
+    background-color: #e74c3c;
     color: white;
-    padding: 8px 15px;
-    border-radius: 5px;
-    text-decoration: none;
-    font-size: 1em;
-    transition: background-color 0.3s ease;
     border: none;
+    border-radius: 0 4px 4px 0;
     cursor: pointer;
+    font-size: 1rem;
 }
 
-.btn-secondary:hover {
-    background-color: #004156;
+/* Movie grid */
+.movie-grid h2 {
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
 }
 
-/* Text Links */
-a {
-    color: #17c3ba; /* Teal for links */
-    text-decoration: none;
-    transition: color 0.3s ease;
-}
-
-a:hover {
-    color: #14a198; /* Slightly darker teal on hover */
-}
-
-/* Form Elements (general styling) */
-input[type="text"],
-input[type="email"],
-input[type="password"],
-input[type="number"],
-textarea,
-select {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #444;
-    border-radius: 5px;
-    background-color: #333;
-    color: #f0f0f0;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-input[type="text"]:focus,
-input[type="email"]:focus,
-input[type="password"]:focus,
-input[type="number"]:focus,
-textarea:focus,
-select:focus {
-    border-color: #17c3ba;
-    box-shadow: 0 0 0 0.2rem rgba(23, 195, 186, 0.25); /* Focus glow */
-    outline: none;
-}
-
-label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-    color: #bbb;
-}
-
-/* Movie Grid (used in home.php and search_results.php) */
-.movie-grid {
+.grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Responsive grid */
-    gap: 30px;
-    padding: 20px 0;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
 }
 
 .movie-card {
-    background-color: #333;
+    background: white;
     border-radius: 8px;
     overflow: hidden;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-    text-align: center;
-    padding-bottom: 15px;
-    transition: transform 0.2s ease-in-out;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
 }
 
 .movie-card:hover {
@@ -159,130 +118,270 @@ label {
 
 .movie-card img {
     width: 100%;
-    height: 375px; /* Maintain aspect ratio roughly 3:4 for consistent look */
+    height: 300px;
     object-fit: cover;
-    border-bottom: 1px solid #444;
 }
 
-.movie-card h3 {
-    font-size: 1.4em;
-    margin: 15px 0 5px;
-    color: #fff;
+.movie-info {
+    padding: 1rem;
 }
 
-.movie-card p {
-    font-size: 0.9em;
-    color: #bbb;
-    margin-bottom: 15px;
+.movie-info h3 {
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
 }
 
-/* Hero Section */
-.hero-section {
+.movie-info p {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+/* Movie details */
+.movie-details {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 2rem;
+}
+
+.movie-poster img {
+    width: 100%;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.movie-info h1 {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.movie-meta {
+    color: #666;
+    margin-bottom: 1rem;
+}
+
+.movie-director, .movie-cast {
+    margin-bottom: 0.5rem;
+}
+
+.movie-description {
+    margin: 1.5rem 0;
+    line-height: 1.8;
+}
+
+.movie-player {
+    margin-top: 2rem;
+}
+
+.movie-player video {
+    width: 100%;
+    border-radius: 8px;
+}
+
+/* Forms */
+.auth-form, .upload-form {
+    max-width: 500px;
+    margin: 0 auto;
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.auth-form h2, .upload-form h2 {
+    margin-bottom: 1.5rem;
     text-align: center;
-    background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://placehold.co/1920x600/000000/FFFFFF?text=MovieFlix+Hero') no-repeat center center/cover; /* Placeholder background */
-    padding: 100px 20px;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+
+.form-group input, .form-group textarea, .form-group select {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.form-group textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+button {
+    width: 100%;
+    padding: 0.8rem;
+    background-color: #2c3e50;
     color: white;
-    border-radius: 10px;
-    margin-bottom: 30px;
-}
-
-.hero-content h1 {
-    font-size: 3.5em;
-    margin-bottom: 15px;
-    color: #fff; /* White for hero text */
-}
-
-.hero-content p {
-    font-size: 1.3em;
-    margin-bottom: 30px;
-    max-width: 800px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-/* Genre Tags */
-.genre-list {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px;
-    margin-top: 20px;
-}
-
-.genre-tag {
-    display: inline-block;
-    background-color: #005f7d;
-    color: white;
-    padding: 8px 20px;
-    border-radius: 20px;
-    font-size: 0.9em;
-    text-decoration: none;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
-.genre-tag:hover {
-    background-color: #004156;
+button:hover {
+    background-color: #1a252f;
 }
 
-/* Call to Action Section */
-.cta-section {
+/* Tables */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+th, td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+}
+
+tr:hover {
+    background-color: #f9f9f9;
+}
+
+/* Admin dashboard */
+.dashboard-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     text-align: center;
-    background-color: #333;
-    padding: 60px 20px;
-    border-radius: 10px;
 }
 
-.cta-section h2 {
-    color: #e50914;
-    margin-bottom: 15px;
+.card h3 {
+    margin-bottom: 0.5rem;
 }
 
-.cta-section p {
-    font-size: 1.1em;
-    margin-bottom: 30px;
-    color: #bbb;
+.card p {
+    color: #666;
+    margin-bottom: 1rem;
 }
 
-/* Utility Classes (could be used alongside Bootstrap's) */
-.text-center {
+.btn {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background-color: #2c3e50;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #1a252f;
+}
+
+/* Alerts */
+.alert {
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    border-radius: 4px;
+}
+
+.alert-error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.alert-success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+/* Footer */
+footer {
+    background-color: #2c3e50;
+    color: white;
     text-align: center;
+    padding: 1.5rem;
 }
 
-.mt-4 { /* Margin Top 4 units */
-    margin-top: 1.5rem; /* Equivalent to Bootstrap's mt-4 */
-}
-
-/* Responsive Adjustments */
+/* Responsive design */
 @media (max-width: 768px) {
-    h1 {
-        font-size: 2.5em;
+    .navbar {
+        flex-direction: column;
+        padding: 1rem;
     }
-    h2 {
-        font-size: 1.8em;
+    
+    .nav-menu {
+        margin-top: 1rem;
     }
-    .hero-section {
-        padding: 60px 20px;
+    
+    .nav-menu a {
+        margin: 0 0.5rem;
     }
-    .movie-grid {
-        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    
+    .movie-details {
+        grid-template-columns: 1fr;
     }
-    .movie-card img {
-        height: 270px; /* Adjust height for smaller screens */
+    
+    .grid {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
+    
+    .hero-content h1 {
+        font-size: 2rem;
     }
 }
 
-@media (max-width: 480px) {
-    h1 {
-        font-size: 2em;
-    }
-    .hero-content p {
-        font-size: 1em;
-    }
-    .btn-primary {
-        padding: 10px 20px;
-        font-size: 1em;
-    }
-    .movie-grid {
-        grid-template-columns: 1fr; /* Single column on very small screens */
-    }
+/* Error page */
+.error-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 60vh;
+    text-align: center;
+    padding: 2rem;
+}
+
+.error-content h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: #e74c3c;
+}
+
+.error-content p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    color: #666;
+}
+
+.error-content .btn {
+    display: inline-block;
+    padding: 0.8rem 1.5rem;
+    background-color: #2c3e50;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.error-content .btn:hover {
+    background-color: #1a252f;
 }

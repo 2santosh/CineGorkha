@@ -1,30 +1,14 @@
-# .htaccess
-#
-# This file is used by Apache web servers to configure server settings
-# for the current directory and its subdirectories.
-# Here, it's primarily used for URL rewriting to enable "pretty URLs"
-# and direct all requests to the index.php front controller.
-
-# Turn on the Rewrite Engine
 RewriteEngine On
 
-# Set the RewriteBase to the directory where your index.php is located.
-# If your project is in the root of your web server, it might be /
-# If it's in a subdirectory like example.com/your_project_name/public/, it would be /your_project_name/public/
-# Adjust this based on your server setup.
-RewriteBase /
+# Set the base URL (adjust this based on your installation)
+RewriteBase /CineGorkha/public/
 
-# Rewrite all requests that are not for actual files or directories
-# to index.php. This ensures that your Router class handles all URLs.
+# Redirect all requests to index.php except for existing files
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*)$ index.php [QSA,L]
+RewriteRule ^(.*)$ index.php?url=$1 [QSA,L]
 
-# QSA (Query String Append): Appends the query string from the original request to the rewritten URL.
-# L (Last Rule): Stops processing further rewrite rules if this rule matches.
-
-# Optional: Disable directory listing
-Options -Indexes
-
-# Optional: Set default charset (if not already set in php.ini or server config)
-AddDefaultCharset UTF-8
+# Set headers for assets
+<FilesMatch "\.(css|js|png|jpg|jpeg|gif|ico|mp4|webm)$">
+    Header set Cache-Control "max-age=2592000, public"
+</FilesMatch>

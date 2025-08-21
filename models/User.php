@@ -1,129 +1,97 @@
 <?php
-/**
- * User.php
- *
- * This model represents the 'users' table in the database.
- * It provides methods for user-related operations like creation, retrieval,
- * password verification, and role management.
- */
-
-class User
-{
-    /**
-     * @var Database The database connection instance.
-     */
-    private $db;
-
-    /**
-     * Constructor: Initializes the User model with a database instance.
-     *
-     * @param Database $db The database connection object.
-     */
-    public function __construct(Database $db)
-    {
-        $this->db = $db;
+class User {
+    private $conn;
+    private $table_name = "users";
+    
+    public $id;
+    public $username;
+    public $email;
+    public $password;
+    public $role;
+    public $created_at;
+    
+    public function __construct($db) {
+        $this->conn = $db;
     }
-
-    /**
-     * Finds a user by their username or email.
-     *
-     * @param string $identifier The username or email.
-     * @return array|false An associative array of user data if found, false otherwise.
-     */
-    public function findUserByIdentifier($identifier)
-    {
-        $this->db->query('SELECT * FROM users WHERE username = :identifier OR email = :identifier');
-        $this->db->bind(':identifier', $identifier);
-        return $this->db->single();
+    
+    // Create new user
+    public function create() {
+        $query = "INSERT INTO " . $this->table_name . " 
+                SET username=:username, email=:email, password=:password, role=:role";
+        
+        $stmt = $this->conn->prepare($query);
+        
+        // Sanitize inputs
+        $this->username = htmlspecialchars(strip_tags($this->username));
+        $this->email = htmlspecialchars(strip_tags($this->email));
+        $this->password = htmlspecialchars(strip_tags($this->password));
+        $this->role = htmlspecialchars(strip_tags($this->role));
+        
+        // Hash password
+        $this->password = password_hash($this->password, PASSWORD_DEFAULT);
+        
+        // Bind parameters
+        $stmt->bindParam(":username", $this->username);
+        $stmt->bindParam(":email", $this->email);
+        $stmt->bindParam(":password", $this->password);
+        $stmt->bindParam(":role", $this->role);
+        
+        if ($stmt->execute()) {
+            return true;
+        }
+        
+        return false;
     }
-
-    /**
-     * Finds a user by their ID.
-     *
-     * @param int $id The user ID.
-     * @return array|false An associative array of user data if found, false otherwise.
-     */
-    public function findUserById($id)
-    {
-        $this->db->query('SELECT * FROM users WHERE id = :id');
-        $this->db->bind(':id', $id);
-        return $this->db->single();
+    
+    // Check if email exists
+    public function emailExists() {
+        $query = "SELECT id, username, password, role 
+                FROM " . $this->table_name . " 
+                WHERE email = ? 
+                LIMIT 0,1";
+        
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(1, $this->email);
+        $stmt->execute();
+        
+        $num = $stmt->rowCount();
+        
+        if ($num > 0) {
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            
+            $this->id = $row['id'];
+            $this->username = $row['username'];
+            $this->password = $row['password'];
+            $this->role = $row['role'];
+            
+            return true;
+        }
+        
+        return false;
     }
-
-    /**
-     * Creates a new user in the database.
-     *
-     * @param string $username The user's chosen username.
-     * @param string $email The user's email address.
-     * @param string $password The user's plain-text password.
-     * @param string $role The user's role (e.g., 'user', 'uploader', 'admin').
-     * @return bool True on successful creation, false otherwise.
-     */
-    public function createUser($username, $email, $password, $role = DEFAULT_USER_ROLE)
-    {
-        // Hash the password before storing it
-        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-
-        $this->db->query('INSERT INTO users (username, email, password, role) VALUES (:username, :email, :password, :role)');
-        $this->db->bind(':username', $username);
-        $this->db->bind(':email', $email);
-        $this->db->bind(':password', $hashedPassword);
-        $this->db->bind(':role', $role);
-
-        return $this->db->execute();
+    
+    // Get all users
+    public function readAll() {
+        $query = "SELECT * FROM " . $this->table_name . " ORDER BY created_at DESC";
+        
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        
+        return $stmt;
     }
-
-    /**
-     * Verifies a user's password against the hashed password in the database.
-     *
-     * @param string $inputPassword The plain-text password provided by the user.
-     * @param string $hashedPassword The hashed password retrieved from the database.
-     * @return bool True if passwords match, false otherwise.
-     */
-    public function verifyPassword($inputPassword, $hashedPassword)
-    {
-        return password_verify($inputPassword, $hashedPassword);
-    }
-
-    /**
-     * Updates a user's information.
-     *
-     * @param int $id The ID of the user to update.
-     * @param string $username The new username.
-     * @param string $email The new email.
-     * @param string $role The new role.
-     * @return bool True on successful update, false otherwise.
-     */
-    public function updateUser($id, $username, $email, $role)
-    {
-        $this->db->query('UPDATE users SET username = :username, email = :email, role = :role WHERE id = :id');
-        $this->db->bind(':username', $username);
-        $this->db->bind(':email', $email);
-        $this->db->bind(':role', $role);
-        $this->db->bind(':id', $id);
-        return $this->db->execute();
-    }
-
-    /**
-     * Deletes a user from the database.
-     *
-     * @param int $id The ID of the user to delete.
-     * @return bool True on successful deletion, false otherwise.
-     */
-    public function deleteUser($id)
-    {
-        $this->db->query('DELETE FROM users WHERE id = :id');
-        $this->db->bind(':id', $id);
-        return $this->db->execute();
-    }
-
-    /**
-     * Gets all users from the database.
-     * @return array An array of all users.
-     */
-    public function getAllUsers()
-    {
-        $this->db->query('SELECT id, username, email, role FROM users'); // Exclude password hash
-        return $this->db->resultSet();
+    
+    // Delete user
+    public function delete() {
+        $query = "DELETE FROM " . $this->table_name . " WHERE id = ?";
+        
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(1, $this->id);
+        
+        if ($stmt->execute()) {
+            return true;
+        }
+        
+        return false;
     }
 }
+?>
